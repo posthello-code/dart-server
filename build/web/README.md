@@ -1,0 +1,1 @@
+Put a static site in the web folder to serve it up here!
