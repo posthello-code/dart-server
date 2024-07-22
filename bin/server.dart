@@ -5,13 +5,7 @@ import 'package:shelf_static/shelf_static.dart';
 
 void main() async {
   // Check if index.html exists
-  String indexFile = 'build/web/index.html';
-  bool indexFileExists = await File('build/web/index.html').exists();
-
-  if (!indexFileExists) {
-    indexFile = 'README.md';
-  }
-
+  String indexFile = 'index.html';
   final handler = const Pipeline()
       .addMiddleware(logRequests())
       .addMiddleware(_corsHeaders) // Add CORS headers middleware
@@ -24,7 +18,8 @@ void main() async {
 
   final server = await io.serve(handler, InternetAddress.anyIPv4, 4001);
   final server2 = await io.serve(handler2, InternetAddress.anyIPv4, 4002);
-  print('Serving static site at http://${server.address.host}:${server.port}');
+  print(
+      'Serving static site at http://${server.address.host}:${server.port}/${indexFile}');
   print(
       'Serving handling requests at http://${server2.address.host}:${server2.port}');
 }
