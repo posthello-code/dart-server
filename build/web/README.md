@@ -1,1 +1,1 @@
-Put a static site in the web folder to serve it up here!
+Files in this folder can be accessed when running the server
