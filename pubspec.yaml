@@ -1,10 +1,10 @@
 name: server
 description: A sample command-line application.
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/posthello-code/dart-server
 
 environment:
-  sdk: '>=2.19.6 <3.0.0'
+  sdk: ">=2.19.6 <4.0.0"
 
 dependencies:
   path: ^1.8.0
