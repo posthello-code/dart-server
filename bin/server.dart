@@ -3,13 +3,19 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_static/shelf_static.dart';
 
-void main() async {
+void main(List<String> arguments) async {
   // Check if index.html exists
+  String staticSitePath = arguments.isNotEmpty ? arguments[0] : 'build/web';
+
   String indexFile = 'index.html';
   final handler = const Pipeline()
       .addMiddleware(logRequests())
       .addMiddleware(_corsHeaders) // Add CORS headers middleware
-      .addHandler(createStaticHandler('build/web', defaultDocument: indexFile));
+      .addHandler(createStaticHandler(
+        staticSitePath,
+        defaultDocument: indexFile,
+        serveFilesOutsidePath: false,
+      ));
 
   final handler2 = const Pipeline()
       .addMiddleware(logRequests())
@@ -19,7 +25,7 @@ void main() async {
   final server = await io.serve(handler, InternetAddress.anyIPv4, 4001);
   final server2 = await io.serve(handler2, InternetAddress.anyIPv4, 4002);
   print(
-      'Serving static site at http://${server.address.host}:${server.port}/${indexFile}');
+      'Serving static site at http://${server.address.host}:${server.port}/$indexFile');
   print(
       'Serving handling requests at http://${server2.address.host}:${server2.port}');
 }
